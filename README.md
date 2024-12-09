@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# AstroDeck
+
+## Environment Variables
+
+Before running this project, you need to set up your environment variables:
+
+1. Copy `.env.example` to `.env`
+2. Replace `your_nasa_api_key_here` with your actual NASA API key
