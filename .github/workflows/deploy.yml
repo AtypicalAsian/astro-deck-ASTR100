@@ -3,7 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # or master, depending on your default branch
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -12,15 +15,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install and Build
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
         env:
           REACT_APP_NASA_API_KEY: ${{ secrets.REACT_APP_NASA_API_KEY }}
-        run: |
-          npm install
-          npm run build
+        run: npm run build
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages
-          folder: build 
+          folder: build
+          branch: gh-pages 
