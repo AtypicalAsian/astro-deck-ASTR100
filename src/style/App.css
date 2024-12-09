@@ -210,3 +210,83 @@
         0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
     background: linear-gradient(45deg, #27272a, #18181b) !important;
 }
+
+.app-container {
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-container.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.dark-mode .titleContainer h1,
+.dark-mode .titleDescription {
+  color: #ffffff;
+}
+
+.dark-mode .dateArrow {
+  color: #ffffff;
+}
+
+.dark-mode .searchSection {
+    background: #1e1e1e;
+    border-bottom: 1px solid #2d2d2d;
+}
+
+.dark-mode .dateInputs {
+    background: #2d2d2d;
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.2),
+        0 2px 4px -1px rgba(0, 0, 0, 0.1),
+        inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .titleSpan:nth-child(2) {
+    background: linear-gradient(45deg, #a1a1aa, #d4d4d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dark-mode .titleDescription {
+    color: #a1a1aa;
+}
+
+.dark-mode .dateArrow {
+    background: #3f3f46;
+    color: #d4d4d8;
+}
+
+.dark-mode .datePicker .MuiOutlinedInput-root {
+    background: #3f3f46;
+    color: #ffffff;
+}
+
+.dark-mode .datePicker .MuiOutlinedInput-root:hover {
+    background: #52525b;
+}
+
+.dark-mode .datePicker .MuiOutlinedInput-root.Mui-focused {
+    background: #2d2d2d;
+    box-shadow: 0 0 0 2px #71717a;
+}
+
+.dark-mode .datePicker .MuiInputLabel-root {
+    color: #d4d4d8;
+}
+
+.dark-mode .searchButton {
+    background: linear-gradient(45deg, #71717a, #52525b) !important;
+}
+
+.dark-mode .searchButton:hover {
+    background: linear-gradient(45deg, #52525b, #3f3f46) !important;
+}

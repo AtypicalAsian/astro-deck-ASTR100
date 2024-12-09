@@ -12,6 +12,10 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { ThemeProvider, createTheme } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const AnimatedTitle = () => (
   <div className="titleContainer">
@@ -26,8 +30,20 @@ const AnimatedTitle = () => (
 function App(props) {
   const [likePics, setLikePics] = useState({});
   const [loading, setLoading] = useState(false);
-  const [valueStart, setValueStart] = React.useState(new Date("01/01/2022"));
-  const [valueEnd, setValueEnd] = React.useState(new Date("01/06/2022"));
+  const [valueStart, setValueStart] = React.useState(new Date("10/17/2021"));
+  const [valueEnd, setValueEnd] = React.useState(new Date("11/02/2021"));
+  const [darkMode, setDarkMode] = useState(false);
+
+  // Create theme based on dark mode state
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: darkMode ? 'dark' : 'light',
+        },
+      }),
+    [darkMode]
+  );
 
   React.useEffect(() => {
 
@@ -92,70 +108,77 @@ function App(props) {
     setLoading(true);
   }
   return (
-    <div>
-      {/* <header className="header">
-        <div className="bodyTitle">AstroDeck</div>
-        <div className="bodySubtitle">Explore NASA's stunning space imagery and facts, one flashcard at a time.</div>
-      </header> */}
-      <section className="searchSection">
-        <AnimatedTitle />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <div className="searchContainer">
-            <div className="dateInputs">
-              <DatePicker
-                label="Start Date"
-                value={valueStart}
-                onChange={(newValue) => setValueStart(newValue)}
-                renderInput={(params) => (
-                  <TextField {...params} className="datePicker" />
-                )}
-              />
-              <div className="dateArrow">→</div>
-              <DatePicker
-                label="End Date"
-                value={valueEnd}
-                onChange={(newValue) => setValueEnd(newValue)}
-                renderInput={(params) => (
-                  <TextField {...params} className="datePicker" />
-                )}
-              />
-            </div>
-            <Button 
-              variant="contained" 
-              className="searchButton"
-              onClick={handleChangeInterval}
-              startIcon={<SearchIcon />}
-            >
-              Explore Space
-            </Button>
-          </div>
-        </LocalizationProvider>
-      </section>
-      <section>
-        {!loading && props.pictures && props.pictures.length > 0 ? <div className="App">
-          <Grid container>
-            {props.pictures.map((picture, i) => {
-              return (
-                <Grid item md={4} sm={12} style={{ padding: "0px 16px" }}>
-                  <SpaceCard
-                    copyright={picture.copyright}
-                    date={picture.date}
-                    explanation={picture.explanation}
-                    title={picture.title}
-                    url={picture.url}
-                    id={i}
-                    handleClickLike={handleClickLike}
-                    likePics={likePics} />
-                </Grid>
-              )
-            })}
-          </Grid>
+    <ThemeProvider theme={theme}>
+      <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
+        <div className="theme-toggle">
+          <IconButton onClick={() => setDarkMode(!darkMode)} color="inherit">
+            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
         </div>
-          :
-          <CircularProgress className="progressLoading" />
-        }
-      </section>
-    </div>
+        {/* <header className="header">
+          <div className="bodyTitle">AstroDeck</div>
+          <div className="bodySubtitle">Explore NASA's stunning space imagery and facts, one flashcard at a time.</div>
+        </header> */}
+        <section className="searchSection">
+          <AnimatedTitle />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <div className="searchContainer">
+              <div className="dateInputs">
+                <DatePicker
+                  label="Start Date"
+                  value={valueStart}
+                  onChange={(newValue) => setValueStart(newValue)}
+                  renderInput={(params) => (
+                    <TextField {...params} className="datePicker" />
+                  )}
+                />
+                <div className="dateArrow">→</div>
+                <DatePicker
+                  label="End Date"
+                  value={valueEnd}
+                  onChange={(newValue) => setValueEnd(newValue)}
+                  renderInput={(params) => (
+                    <TextField {...params} className="datePicker" />
+                  )}
+                />
+              </div>
+              <Button 
+                variant="contained" 
+                className="searchButton"
+                onClick={handleChangeInterval}
+                startIcon={<SearchIcon />}
+              >
+                Look into Space
+              </Button>
+            </div>
+          </LocalizationProvider>
+        </section>
+        <section>
+          {!loading && props.pictures && props.pictures.length > 0 ? <div className="App">
+            <Grid container>
+              {props.pictures.map((picture, i) => {
+                return (
+                  <Grid item md={4} sm={12} style={{ padding: "0px 16px" }}>
+                    <SpaceCard
+                      copyright={picture.copyright}
+                      date={picture.date}
+                      explanation={picture.explanation}
+                      title={picture.title}
+                      url={picture.url}
+                      id={i}
+                      handleClickLike={handleClickLike}
+                      likePics={likePics} />
+                  </Grid>
+                )
+              })}
+            </Grid>
+          </div>
+            :
+            <CircularProgress className="progressLoading" />
+          }
+        </section>
+      </div>
+    </ThemeProvider>
   );
 }
 

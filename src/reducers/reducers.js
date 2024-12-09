@@ -3,7 +3,7 @@ const initialState = {
   error: "",
   pictures: [],
   //default url
-  urlGetApod: `https://api.nasa.gov/planetary/apod?start_date=2022-01-01&end_date=2022-01-06&api_key=${process.env.REACT_APP_NASA_API_KEY}`, 
+  urlGetApod: `https://api.nasa.gov/planetary/apod?start_date=2021-10-17&end_date=2021-11-02&api_key=${process.env.REACT_APP_NASA_API_KEY}`, 
   reload: false,
 };
 
