@@ -116,9 +116,9 @@ function App(props) {
 
   // Filter images based on favorite status
   const displayedPictures = showFavorites
-    ? props.pictures.filter((picture, i) => {
+    ? props.pictures.filter((picture) => {
         const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-        return favorites[i];
+        return favorites[picture.date];
       })
     : props.pictures;
 

@@ -10,13 +10,13 @@ function SpaceCard(props) {
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-    setIsFavorite(favorites[props.id] || false);
-  }, [props.id]);
+    setIsFavorite(favorites[props.date] || false);
+  }, [props.date]);
 
   const toggleFavorite = (e) => {
     e.stopPropagation();
     const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-    favorites[props.id] = !isFavorite;
+    favorites[props.date] = !isFavorite;
     localStorage.setItem('favorites', JSON.stringify(favorites));
     setIsFavorite(!isFavorite);
   };
