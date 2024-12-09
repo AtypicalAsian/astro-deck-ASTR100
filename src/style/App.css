@@ -1,0 +1,212 @@
+/* Modern Title Styles */
+.titleContainer {
+    text-align: center;
+    margin-bottom: 64px;
+    animation: fadeIn 1s ease-out;
+}
+
+.mainTitle {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    color: #18181b;
+}
+
+.titleSpan {
+    display: inline-block;
+    animation: slideIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.titleSpan:nth-child(2) {
+    background: linear-gradient(45deg, #71717a, #3f3f46);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation-delay: 0.1s;
+}
+
+.titleDescription {
+    font-size: 18px;
+    color: #71717a;
+    margin: 16px 0 0 0;
+    animation: fadeIn 1s ease-out 0.5s both;
+}
+
+/* Revolutionary Search Section Styles */
+.searchSection {
+    background: #fafafa;
+    padding: 80px 32px;
+    border-bottom: 1px solid #e4e4e7;
+}
+
+.searchContainer {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: transparent;
+    position: relative;
+}
+
+.dateInputs {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 32px;
+    background: white;
+    padding: 32px;
+    border-radius: 32px;
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dateArrow {
+    font-size: 28px;
+    color: #52525b;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f4f5;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+/* Modern Date Picker Styles */
+.datePicker {
+    position: relative;
+}
+
+.datePicker .MuiOutlinedInput-root {
+    background: #f4f4f5;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border: none !important;
+    padding: 16px !important;
+}
+
+.datePicker .MuiOutlinedInput-root:hover {
+    background: #e4e4e7;
+}
+
+.datePicker .MuiOutlinedInput-root.Mui-focused {
+    background: white;
+    box-shadow: 0 0 0 2px #71717a;
+}
+
+.datePicker .MuiInputLabel-root {
+    color: #52525b;
+    font-weight: 500;
+}
+
+/* Modern Search Button Styles */
+.searchButton {
+    width: 100%;
+    background: linear-gradient(45deg, #3f3f46, #27272a) !important;
+    border-radius: 20px !important;
+    padding: 20px 40px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.1),
+        0 4px 6px rgba(0, 0, 0, 0.06) !important;
+    color: white !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.searchButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    background: linear-gradient(45deg, #27272a, #18181b) !important;
+}
+
+.searchButton .MuiButton-startIcon {
+    margin-right: 12px !important;
+    color: white !important;
+}
+
+/* Enhanced Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        background: #f4f4f5;
+    }
+    50% {
+        transform: scale(1.05);
+        background: #e4e4e7;
+    }
+    100% {
+        transform: scale(1);
+        background: #f4f4f5;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mainTitle {
+        font-size: 42px;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .titleDescription {
+        font-size: 16px;
+    }
+
+    .dateInputs {
+        grid-template-columns: 1fr;
+        padding: 24px;
+    }
+
+    .dateArrow {
+        transform: rotate(90deg);
+        margin: 8px 0;
+    }
+}
+
+/* Search Button Styles - More specific selectors */
+.searchButton.MuiButton-root {
+    width: 100%;
+    background: linear-gradient(45deg, #3f3f46, #27272a) !important;
+    border-radius: 20px !important;
+    padding: 20px 40px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.1),
+        0 4px 6px rgba(0, 0, 0, 0.06) !important;
+    color: white !important;
+}
+
+/* Target all text elements inside the button */
+.searchButton.MuiButton-root .MuiButton-label,
+.searchButton.MuiButton-root span,
+.searchButton.MuiButton-root .MuiButton-startIcon,
+.searchButton.MuiButton-root .MuiSvgIcon-root {
+    color: white !important;
+}
+
+/* Hover state */
+.searchButton.MuiButton-root:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    background: linear-gradient(45deg, #27272a, #18181b) !important;
+}
