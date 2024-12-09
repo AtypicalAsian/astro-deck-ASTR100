@@ -30,8 +30,8 @@ const AnimatedTitle = () => (
 function App(props) {
   const [likePics, setLikePics] = useState({});
   const [loading, setLoading] = useState(false);
-  const [valueStart, setValueStart] = React.useState(new Date("10/17/2021"));
-  const [valueEnd, setValueEnd] = React.useState(new Date("11/02/2021"));
+  const [valueStart, setValueStart] = React.useState(new Date("10/16/2023"));
+  const [valueEnd, setValueEnd] = React.useState(new Date("10/24/2023"));
   const [darkMode, setDarkMode] = useState(false);
   const [filterText, setFilterText] = useState('');
   const [showFavorites, setShowFavorites] = useState(false);
