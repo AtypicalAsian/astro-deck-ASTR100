@@ -77,6 +77,13 @@ body{
     overflow-y: auto;
 }
 
+.imageContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
 .cardImage {
     width: 100%;
     height: 100%;
@@ -86,27 +93,28 @@ body{
 /* Like button styling */
 .like {
     position: absolute !important;
-    bottom: 24px !important;
-    right: 24px !important;
-    background: white !important;
+    bottom: 16px !important;
+    right: 16px !important;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.8) !important;
     border-radius: 50% !important;
-    width: 56px !important;
-    height: 56px !important;
-    min-width: unset !important;
+    width: 48px !important;
+    height: 48px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-    transition: transform 0.2s ease !important;
-    z-index: 2; /* Ensure button stays above both sides */
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .like:hover {
-    transform: scale(1.1) !important;
-    background: white !important;
+    background: rgba(255, 255, 255, 1) !important;
+    transform: scale(1.1);
+}
+
+.likeIcon {
+    font-size: 28px !important;
+    color: #ff6b6b; /* Tinder-like red color */
 }
 
 /* Back side content styling */

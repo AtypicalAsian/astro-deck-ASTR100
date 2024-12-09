@@ -34,6 +34,7 @@ function App(props) {
   const [valueEnd, setValueEnd] = React.useState(new Date("11/02/2021"));
   const [darkMode, setDarkMode] = useState(false);
   const [filterText, setFilterText] = useState('');
+  const [showFavorites, setShowFavorites] = useState(false);
 
   // Create theme based on dark mode state
   const theme = React.useMemo(
@@ -113,6 +114,14 @@ function App(props) {
     picture.explanation.toLowerCase().includes(filterText.toLowerCase())
   ) : [];
 
+  // Filter images based on favorite status
+  const displayedPictures = showFavorites
+    ? props.pictures.filter((picture, i) => {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+        return favorites[i];
+      })
+    : props.pictures;
+
   return (
     <ThemeProvider theme={theme}>
       <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
@@ -176,8 +185,15 @@ function App(props) {
         <section>
           {!loading && filteredPictures.length > 0 ? (
             <div className="App">
+              <Button 
+                variant="contained" 
+                onClick={() => setShowFavorites(!showFavorites)}
+              >
+                {showFavorites ? "Show All Images" : "Show Favorites"}
+              </Button>
+
               <Grid container>
-                {filteredPictures.map((picture, i) => (
+                {displayedPictures.map((picture, i) => (
                   <Grid item md={4} sm={12} style={{ padding: "0px 16px" }} key={i}>
                     <SpaceCard
                       copyright={picture.copyright}

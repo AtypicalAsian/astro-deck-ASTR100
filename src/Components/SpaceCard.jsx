@@ -1,12 +1,25 @@
 import "../style/card.css";
-import Button from '@mui/material/Button';
-import { Card } from '@mui/material';
+import { Card, Button } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function SpaceCard(props) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+    setIsFavorite(favorites[props.id] || false);
+  }, [props.id]);
+
+  const toggleFavorite = (e) => {
+    e.stopPropagation();
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+    favorites[props.id] = !isFavorite;
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <div className="cardContainer">
@@ -16,7 +29,13 @@ function SpaceCard(props) {
       >
         <div className="cardInner">
           <div className="cardFront">
-            <img src={props.url} alt="APOD" className="cardImage" />
+            <div className="imageContainer">
+              <img 
+                src={props.url} 
+                alt="APOD" 
+                className="cardImage" 
+              />
+            </div>
           </div>
           
           <div className="cardBack">
@@ -33,14 +52,11 @@ function SpaceCard(props) {
 
         <Button 
           className="like" 
-          onClick={(e) => { 
-            e.stopPropagation(); 
-            props.handleClickLike(props.id);
-          }}
+          onClick={toggleFavorite}
         >
-          {!props.likePics[props.id] 
-            ? <FavoriteBorderIcon sx={{ fontSize: 28 }} /> 
-            : <FavoriteIcon sx={{ fontSize: 28, color: "red" }} />
+          {isFavorite 
+            ? <FavoriteIcon className="likeIcon" /> 
+            : <FavoriteBorderIcon className="likeIcon" />
           }
         </Button>
       </Card>

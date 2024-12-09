@@ -256,7 +256,8 @@
 }
 
 .dark-mode .dateArrow {
-  color: #ffffff;
+  color: #000000;
+  background: #e4e4e7;
 }
 
 .dark-mode .searchSection {
