@@ -105,36 +105,65 @@
 }
 
 /* Modern Search Button Styles */
-.searchButton {
-    width: 100%;
-    background: linear-gradient(45deg, #3f3f46, #27272a) !important;
-    border-radius: 20px !important;
-    padding: 20px 40px !important;
-    font-size: 18px !important;
+.searchButton.MuiButton-root {
+    min-width: 180px !important;
+    margin: 24px auto !important;
+    padding: 12px 28px !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
-    text-transform: none !important;
-    letter-spacing: 0.5px !important;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border: none !important;
+    letter-spacing: 0.3px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(45deg, #3f3f46, #27272a) !important;
     box-shadow: 
-        0 10px 20px rgba(0, 0, 0, 0.1),
-        0 4px 6px rgba(0, 0, 0, 0.06) !important;
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+    text-transform: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
     color: white !important;
     position: relative;
     overflow: hidden;
 }
 
-.searchButton:hover {
+.searchButton.MuiButton-root:hover {
     transform: translateY(-2px);
-    box-shadow: 
-        0 20px 25px -5px rgba(0, 0, 0, 0.1),
-        0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
     background: linear-gradient(45deg, #27272a, #18181b) !important;
+    box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.12),
+        0 3px 6px rgba(0, 0, 0, 0.08) !important;
 }
 
-.searchButton .MuiButton-startIcon {
-    margin-right: 12px !important;
-    color: white !important;
+.searchButton.MuiButton-root:active {
+    transform: translateY(0);
+}
+
+.searchButton.MuiButton-root .MuiButton-startIcon {
+    margin: 0 !important;
+    font-size: 20px !important;
+}
+
+/* Dark mode adjustments */
+.dark-mode .searchButton.MuiButton-root {
+    background: linear-gradient(45deg, #71717a, #52525b) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dark-mode .searchButton.MuiButton-root:hover {
+    background: linear-gradient(45deg, #52525b, #3f3f46) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .searchButton.MuiButton-root {
+        min-width: 160px !important;
+        padding: 10px 24px !important;
+        font-size: 14px !important;
+    }
 }
 
 /* Enhanced Animations */
@@ -178,20 +207,13 @@
 
 /* Search Button Styles - More specific selectors */
 .searchButton.MuiButton-root {
-    width: 100%;
-    background: linear-gradient(45deg, #3f3f46, #27272a) !important;
-    border-radius: 20px !important;
-    padding: 20px 40px !important;
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    text-transform: none !important;
-    letter-spacing: 0.5px !important;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border: none !important;
-    box-shadow: 
-        0 10px 20px rgba(0, 0, 0, 0.1),
-        0 4px 6px rgba(0, 0, 0, 0.06) !important;
-    color: white !important;
+    width: auto !important;
+    min-width: 200px !important;
+    margin: 24px auto !important;
+    padding: 12px 32px !important;
+    font-size: 16px !important;
+    border-radius: 16px !important;
+    display: block !important;
 }
 
 /* Target all text elements inside the button */
@@ -289,4 +311,114 @@
 
 .dark-mode .searchButton:hover {
     background: linear-gradient(45deg, #52525b, #3f3f46) !important;
+}
+
+/* Enhanced Filter Input Styles */
+.filterInput {
+    margin: 16px 0 8px;
+    width: calc(100% - 48px);
+    margin-left: 24px;
+    margin-right: 24px;
+    background: white;
+    padding: 16px 24px;
+    border-radius: 20px;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.04),
+        inset 0 1px 2px rgba(0, 0, 0, 0.03);
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.filterInput:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.06),
+        inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.filterInput .MuiOutlinedInput-root {
+    background: #f4f4f5;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    border: none !important;
+    padding: 8px 16px !important;
+    font-size: 0.95rem;
+}
+
+.filterInput .MuiOutlinedInput-root:hover {
+    background: #e4e4e7;
+}
+
+.filterInput .MuiOutlinedInput-root.Mui-focused {
+    background: white;
+    box-shadow: 0 0 0 2px #71717a;
+}
+
+.filterInput .MuiInputLabel-root {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #52525b;
+    transform: translate(16px, 8px) scale(1);
+}
+
+.filterInput .MuiInputLabel-root.Mui-focused {
+    color: #3f3f46;
+}
+
+.filterInput .searchIcon {
+    color: #71717a;
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+/* Dark mode support */
+.dark-mode .filterInput {
+    background: #2d2d2d;
+}
+
+.dark-mode .filterInput .MuiOutlinedInput-root {
+    background: #3f3f46;
+    color: #ffffff;
+}
+
+.dark-mode .filterInput .MuiOutlinedInput-root:hover {
+    background: #52525b;
+}
+
+.dark-mode .filterInput .MuiOutlinedInput-root.Mui-focused {
+    background: #2d2d2d;
+    box-shadow: 0 0 0 2px #71717a;
+}
+
+.dark-mode .filterInput .MuiInputLabel-root {
+    color: #a1a1aa;
+}
+
+.dark-mode .filterInput .searchIcon {
+    color: #a1a1aa;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .filterInput,
+    .searchButton.MuiButton-root {
+        margin: 12px 16px !important;
+        width: calc(100% - 32px) !important;
+    }
+    
+    .filterInput {
+        padding: 12px 20px;
+    }
+
+    .searchButton.MuiButton-root {
+        min-width: 180px !important;
+        padding: 10px 24px !important;
+        font-size: 15px !important;
+    }
+}
+
+/* Container for button to ensure proper centering */
+.buttonContainer {
+    text-align: center;
+    margin-top: 8px;
 }

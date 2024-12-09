@@ -4,9 +4,8 @@ import SpaceCard from './Components/SpaceCard';
 import { connect } from "react-redux";
 import { getApod } from "./actions/actions";
 import { updateTimeRange } from "./actions/actions";
-import { Grid } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -16,6 +15,7 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const AnimatedTitle = () => (
   <div className="titleContainer">
@@ -33,6 +33,7 @@ function App(props) {
   const [valueStart, setValueStart] = React.useState(new Date("10/17/2021"));
   const [valueEnd, setValueEnd] = React.useState(new Date("11/02/2021"));
   const [darkMode, setDarkMode] = useState(false);
+  const [filterText, setFilterText] = useState('');
 
   // Create theme based on dark mode state
   const theme = React.useMemo(
@@ -107,6 +108,11 @@ function App(props) {
     props.updateTimeRange(startDate, endDate);
     setLoading(true);
   }
+
+  const filteredPictures = props.pictures ? props.pictures.filter(picture => 
+    picture.explanation.toLowerCase().includes(filterText.toLowerCase())
+  ) : [];
+
   return (
     <ThemeProvider theme={theme}>
       <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
@@ -115,10 +121,6 @@ function App(props) {
             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </div>
-        {/* <header className="header">
-          <div className="bodyTitle">AstroDeck</div>
-          <div className="bodySubtitle">Explore NASA's stunning space imagery and facts, one flashcard at a time.</div>
-        </header> */}
         <section className="searchSection">
           <AnimatedTitle />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -142,23 +144,41 @@ function App(props) {
                   )}
                 />
               </div>
-              <Button 
-                variant="contained" 
-                className="searchButton"
-                onClick={handleChangeInterval}
-                startIcon={<SearchIcon />}
-              >
-                Look into Space
-              </Button>
+              <TextField
+                className="filterInput"
+                fullWidth
+                variant="outlined"
+                value={filterText}
+                onChange={(e) => setFilterText(e.target.value)}
+                placeholder="Try 'galaxy' or 'nebula'..."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon className="searchIcon" />
+                    </InputAdornment>
+                  ),
+                }}
+                size="small"
+              />
+              <div className="buttonContainer">
+                <Button 
+                  variant="contained" 
+                  className="searchButton"
+                  onClick={handleChangeInterval}
+                  startIcon={<SearchIcon />}
+                >
+                  Explore
+                </Button>
+              </div>
             </div>
           </LocalizationProvider>
         </section>
         <section>
-          {!loading && props.pictures && props.pictures.length > 0 ? <div className="App">
-            <Grid container>
-              {props.pictures.map((picture, i) => {
-                return (
-                  <Grid item md={4} sm={12} style={{ padding: "0px 16px" }}>
+          {!loading && filteredPictures.length > 0 ? (
+            <div className="App">
+              <Grid container>
+                {filteredPictures.map((picture, i) => (
+                  <Grid item md={4} sm={12} style={{ padding: "0px 16px" }} key={i}>
                     <SpaceCard
                       copyright={picture.copyright}
                       date={picture.date}
@@ -167,15 +187,15 @@ function App(props) {
                       url={picture.url}
                       id={i}
                       handleClickLike={handleClickLike}
-                      likePics={likePics} />
+                      likePics={likePics}
+                    />
                   </Grid>
-                )
-              })}
-            </Grid>
-          </div>
-            :
+                ))}
+              </Grid>
+            </div>
+          ) : (
             <CircularProgress className="progressLoading" />
-          }
+          )}
         </section>
       </div>
     </ThemeProvider>
