@@ -17,7 +17,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import InputAdornment from '@mui/material/InputAdornment';
 
-const AnimatedTitle = () => (
+const AppTitle = () => (
   <div className="titleContainer">
     <h1 className="mainTitle">
       <span className="titleSpan">Astro</span>
@@ -27,118 +27,109 @@ const AnimatedTitle = () => (
   </div>
 );
 
-function App(props) {
-  const [likePics, setLikePics] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [valueStart, setValueStart] = React.useState(new Date("10/16/2023"));
-  const [valueEnd, setValueEnd] = React.useState(new Date("10/24/2023"));
-  const [darkMode, setDarkMode] = useState(false);
-  const [filterText, setFilterText] = useState('');
-  const [showFavorites, setShowFavorites] = useState(false);
+function App({ pictures, reload, getApod, updateTimeRange }) {
+  const [favoriteStates, setFavoriteStates] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [startDate, setStartDate] = useState(new Date("10/16/2023"));
+  const [endDate, setEndDate] = useState(new Date("10/24/2023"));
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isFavoritesView, setIsFavoritesView] = useState(false);
 
-  // Create theme based on dark mode state
   const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: darkMode ? 'dark' : 'light',
-        },
-      }),
-    [darkMode]
+    () => createTheme({
+      palette: { mode: isDarkMode ? 'dark' : 'light' },
+    }),
+    [isDarkMode]
   );
 
-  React.useEffect(() => {
+  const isValidDate = (date) => {
+    return date instanceof Date && !isNaN(date);
+  };
 
-    props.getApod();
-    if (props.pictures && props.pictures.length > 0) {
-      props.pictures.map((picture, i) => {
-        return likePics[i] = false;
-      })
+  React.useEffect(() => {
+    getApod();
+    if (pictures?.length > 0) {
+      const initialFavorites = Object.fromEntries(
+        pictures.map((_, index) => [index, false])
+      );
+      setFavoriteStates(initialFavorites);
     }
-    setLikePics({ ...likePics });
-  }, [props.reload]);
+    setIsLoading(false);
+  }, [reload, pictures, getApod]);
 
-  React.useEffect(() => {
-    setLoading(false);
-  }, [props.pictures])
+  const toggleFavorite = (key) => {
+    setFavoriteStates(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
 
+  const validateDateRange = () => {
+    const currentDate = new Date();
+    const minDate = new Date("09/01/2021");
 
-  React.useEffect(() => {
-    props.getApod();
-    if (props.pictures && props.pictures.length > 0) {
-      props.pictures.map((picture, i) => {
-        return likePics[i] = false;
-      })
-    }
-    setLikePics({ ...likePics });
-  }, [props.reload]);
-
-  React.useEffect(() => {
-    setLoading(false);
-  }, [props.pictures])
-
-  const handleClickLike = (key) => {
-    likePics[key] = !likePics[key];
-    setLikePics({ ...likePics });
-  }
-
-  //util function to check  valid Date
-  const isValidDate = (d) => {
-    return d instanceof Date && !isNaN(d);
-  }
-
-  const handleChangeInterval = () => {
-    if (!isValidDate(valueStart) || !isValidDate(valueEnd)) {
+    if (!isValidDate(startDate) || !isValidDate(endDate)) {
       alert("Start Date or End Date is invalid!");
-      return;
+      return false;
     }
-    else if (valueStart > valueEnd) {
+    if (startDate > endDate) {
       alert("Start Date is greater than End Date");
-      return;
+      return false;
     }
-    else if (valueStart < new Date("09/01/2021") || valueStart > new Date()) {
+    if (startDate < minDate || startDate > currentDate) {
       alert("Start Date is out of range");
-      return;
+      return false;
     }
-    else if (valueEnd < new Date("09/01/2021") || valueEnd > new Date()) {
+    if (endDate < minDate || endDate > currentDate) {
       alert("End Date is out of range");
-      return;
+      return false;
     }
-    const startDate = String(valueStart.getFullYear()) + '-' + String(valueStart.getMonth() + 1) + '-' + String(valueStart.getDate());
-    const endDate = String(valueEnd.getFullYear()) + '-' + String(valueEnd.getMonth() + 1) + '-' + String(valueEnd.getDate());
-    props.updateTimeRange(startDate, endDate);
-    setLoading(true);
-  }
+    return true;
+  };
 
-  const filteredPictures = props.pictures ? props.pictures.filter(picture => 
-    picture.explanation.toLowerCase().includes(filterText.toLowerCase())
-  ) : [];
+  const handleSearch = () => {
+    if (!validateDateRange()) return;
+    
+    const formatDate = (date) => {
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    };
 
-  // Filter images based on favorite status
-  const displayedPictures = showFavorites
-    ? props.pictures.filter((picture) => {
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-        return favorites[picture.date];
-      })
-    : props.pictures;
+    setIsLoading(true);
+    updateTimeRange(formatDate(startDate), formatDate(endDate));
+  };
+
+  // Filtered pictures logic
+  const filteredPictures = React.useMemo(() => {
+    const filtered = pictures?.filter(picture => 
+      picture?.explanation?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) ?? [];
+    
+    return isFavoritesView
+      ? filtered.filter(picture => {
+          const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
+          return favorites[picture.date];
+        })
+      : filtered;
+  }, [pictures, searchQuery, isFavoritesView]);
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
+      <div className={`app-container ${isDarkMode ? 'dark-mode' : ''}`}>
         <div className="theme-toggle">
-          <IconButton onClick={() => setDarkMode(!darkMode)} color="inherit">
-            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+          <IconButton onClick={() => setIsDarkMode(!isDarkMode)} color="inherit">
+            {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </div>
         <section className="searchSection">
-          <AnimatedTitle />
+          <AppTitle />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div className="searchContainer">
               <div className="dateInputs">
                 <DatePicker
                   label="Start Date"
-                  value={valueStart}
-                  onChange={(newValue) => setValueStart(newValue)}
+                  value={startDate}
+                  onChange={(newValue) => setStartDate(newValue)}
                   renderInput={(params) => (
                     <TextField {...params} className="datePicker" />
                   )}
@@ -146,8 +137,8 @@ function App(props) {
                 <div className="dateArrow">→</div>
                 <DatePicker
                   label="End Date"
-                  value={valueEnd}
-                  onChange={(newValue) => setValueEnd(newValue)}
+                  value={endDate}
+                  onChange={(newValue) => setEndDate(newValue)}
                   renderInput={(params) => (
                     <TextField {...params} className="datePicker" />
                   )}
@@ -157,8 +148,8 @@ function App(props) {
                 className="filterInput"
                 fullWidth
                 variant="outlined"
-                value={filterText}
-                onChange={(e) => setFilterText(e.target.value)}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Try 'galaxy' or 'nebula'..."
                 InputProps={{
                   startAdornment: (
@@ -173,7 +164,7 @@ function App(props) {
                 <Button 
                   variant="contained" 
                   className="searchButton"
-                  onClick={handleChangeInterval}
+                  onClick={handleSearch}
                   startIcon={<SearchIcon />}
                 >
                   Explore
@@ -183,17 +174,17 @@ function App(props) {
           </LocalizationProvider>
         </section>
         <section>
-          {!loading && filteredPictures.length > 0 ? (
+          {!isLoading && filteredPictures.length > 0 ? (
             <div className="App">
               <Button 
                 variant="contained" 
-                onClick={() => setShowFavorites(!showFavorites)}
+                onClick={() => setIsFavoritesView(!isFavoritesView)}
               >
-                {showFavorites ? "Show All Images" : "Show Favorites"}
+                {isFavoritesView ? "Show All Images" : "Show Favorites"}
               </Button>
 
               <Grid container>
-                {displayedPictures.map((picture, i) => (
+                {filteredPictures.map((picture, i) => (
                   <Grid item md={4} sm={12} style={{ padding: "0px 16px" }} key={i}>
                     <SpaceCard
                       copyright={picture.copyright}
@@ -202,8 +193,8 @@ function App(props) {
                       title={picture.title}
                       url={picture.url}
                       id={i}
-                      handleClickLike={handleClickLike}
-                      likePics={likePics}
+                      handleClickLike={toggleFavorite}
+                      likePics={favoriteStates}
                     />
                   </Grid>
                 ))}
