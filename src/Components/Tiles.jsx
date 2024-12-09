@@ -4,7 +4,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState, useEffect } from 'react';
 
-function SpaceCard(props) {
+function Tiles(props) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -64,4 +64,4 @@ function SpaceCard(props) {
   );
 }
 
-export default SpaceCard;
+export default Tiles;

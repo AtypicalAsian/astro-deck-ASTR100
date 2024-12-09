@@ -1,9 +1,9 @@
 import './style/App.css';
 import React, { useState } from 'react';
-import SpaceCard from './Components/SpaceCard';
+import SpaceCard from './Components/Tiles';
 import { connect } from "react-redux";
-import { getApod } from "./actions/actions";
-import { updateTimeRange } from "./actions/actions";
+import { getApod } from "./actions/query";
+import { updateTimeRange } from "./actions/query";
 import { Grid, TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
