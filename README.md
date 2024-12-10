@@ -26,6 +26,7 @@ AstroDeck is an interactive web application that brings the wonders of space dir
 - NASA API key
 
 ### Installation
+Enter the following command in your terminal:
 
 1. Clone the repository
 ```bash
