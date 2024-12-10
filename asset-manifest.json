@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/astro-deck-astr100/static/css/main.03e7dccb.css",
-    "main.js": "/astro-deck-astr100/static/js/main.93c30438.js",
-    "index.html": "/astro-deck-astr100/index.html",
-    "main.03e7dccb.css.map": "/astro-deck-astr100/static/css/main.03e7dccb.css.map",
-    "main.93c30438.js.map": "/astro-deck-astr100/static/js/main.93c30438.js.map"
+    "main.css": "./static/css/main.03e7dccb.css",
+    "main.js": "./static/js/main.93c30438.js",
+    "index.html": "./index.html",
+    "main.03e7dccb.css.map": "./static/css/main.03e7dccb.css.map",
+    "main.93c30438.js.map": "./static/js/main.93c30438.js.map"
   },
   "entrypoints": [
     "static/css/main.03e7dccb.css",
