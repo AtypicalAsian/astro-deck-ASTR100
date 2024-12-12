@@ -3,7 +3,7 @@ const initialState = {
   error: "",
   pictures: [],
   //default url
-  urlGetApod: `https://api.nasa.gov/planetary/apod?start_date=2023-10-16&end_date=2023-10-24&api_key=g559bl02QPk9uTl6FX3KHshJaZZ9bg72EgHJYPVT`, 
+  urlGetApod: `https://api.nasa.gov/planetary/apod?start_date=2023-10-16&end_date=2023-10-24&api_key=${process.env.REACT_APP_NASA_API_KEY}`, 
   reload: false,
 };
 
@@ -18,7 +18,7 @@ const pictures = (state = initialState, action) => {
     case "UPDATE_RANGE":
       return {
         ...state,
-        urlGetApod: `https://api.nasa.gov/planetary/apod?start_date=${action.payload.startDate}&end_date=${action.payload.endDate}&api_key=g559bl02QPk9uTl6FX3KHshJaZZ9bg72EgHJYPVT`,
+        urlGetApod: `https://api.nasa.gov/planetary/apod?start_date=${action.payload.startDate}&end_date=${action.payload.endDate}&api_key=${process.env.REACT_APP_NASA_API_KEY}`,
         reload: !state.reload,
       };
     default:
